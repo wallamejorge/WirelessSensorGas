@@ -2,10 +2,13 @@ WirlessSensorGas
 ================
 
 //-----------------------------------------------------------------------------------//
+
 Autores: 
+
     Monica Tuta Fajardo  --------> mj.tuta172@uniandes.edu.co
     Juan Felipe Martinez --------> jf.martinez1554@uniandes.edu.co
     Jorge Luis Mayorga    -------> jl.mayorga236@uniandes.edu.co
+    
 //-----------------------------------------------------------------------------------//
 
 
