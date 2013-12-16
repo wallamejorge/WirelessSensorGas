@@ -20,17 +20,29 @@ Sensor Inamabrico distribuido con un server central para la medición de multipl
 Index
 
 ------------------------------------------------------------------------------------
+
 *Folders:
+
   **backup:Se guarda un backup de la wiki temporal  y de los tutoriales, manuales, codigos imporantes,etc.
+  
   **docs:Se almacenan los manuales de las librerias, PCB, prototipos,etc.
+  
   **html:Se almacena el portal HTML que tiene como server Dropbox ( temporalmente)
+  
   **rtl:Se almacenan recursos como drivers, instaladores, scripts, etc.
+  
   **scr:Se almacena el codigo fuente en tres carpetas c,python  y latex.
+  
   **wiki:Se almacenan imagenes, documentos, guias, videos, todo el material para la wiki
+  
 *Files:
+
   *LICENSE: Archivo de licencia apache sobre lo producido en el grupo
+  
   *README: Archivo con informacion sobre el proyecto (Este archivo)
+  
   *ABSTRAC: Resumen de los objetivos, metodologia, motivacion, soluciones, etc.
+  
 
 
 
