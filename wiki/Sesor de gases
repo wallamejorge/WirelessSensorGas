@@ -1,0 +1,74 @@
+==Caracterización sensor de gas==
+
+*Características físicas del dispositivo
+
+Como solución al problema propuesto de la medición de gases contaminantes del medio, se presenta a continuación el sensor
+de gas MQ135.
+
+<center>[[SensorGas.png]]</center>
+<center>"Sensor de Gases."</center>
+
+
+Este sensor es preciso para la medición de gases como Amoniaco(NH3),Óxidos de mono nitrógeno (NOx), Alcohol(-OH), Benceno(C6H6),
+humo, Dióxido de carbono(CO2), el de nuestro especial interés METANO (CH3), entre otros.
+Adicionalmente, se emplea una tarjeta, como se muestra previamente, que permite la facilidad de su conexión.
+
+Características
+<table>
+<table border="1">
+<tr>
+<th>Nombre</th>
+<th>Descripción</th>
+</tr>
+<tr>
+<td>Velocidad de respuesta</td>
+<td>Rápida</td>
+</tr>
+<tr>
+<td>Sensibilidad</td>
+<td>Alta</td>
+</tr>
+<tr>
+<td>Terminales</td>
+<td>Análogo, digital (TTL)</td>
+</tr>
+<tr>
+<td>Voltaje de operación</td>
+<td>5VDC</td>
+</tr>
+<tr>
+<td>Dimensiones tarjeta</td>
+<td>32mm x 22mm x 30mm (largo, ancho, alto)</td>
+</tr>
+<tr>
+<td>Potencia consumida</td>
+<td>>800mW</td>
+</tr>
+<tr>
+<td>Potencia consumida</td>
+<td>>800mW</td>
+</tr>
+<td>Valores importantes de concentración de gases</td>
+<td>>CO 0-300ppm, NO2 0-20ppm, NH3 0-100ppm,
+H2S 0-100ppm, CO2 0-20.000 ppm, CL2 0-10 ppm O2 0-25%.
+Metano=????????
+</td>
+</tr>
+</table>
+
+Para comprobar su funcionamiento se realiza un montaje en donde al pin VCC se conecta una resistencia
+de protección pequeña (ej. 220ohms), el pin Aout a un led-resistencia-ground el pin Dout y por último 
+GND al ground del circuito.
+Además, el terminal Aout o Dout pueden ser conectados a las entradas ADC o digitales, respectivamente, 
+para ser leidas posteriormente por la Beagle Bone Black
+
+Videos de funcionamiento para CO2
+
+<center> <youtube>lAx4XdxCM5Y</youtube></center> // COLOCAR CON EL C'ODIGO DE LA WIKI CORRESPONDIENTE PARA VIDEOS DE YOUTUBE
+<center>"Prueba salida digital1 y análoga1 "</center>
+<center> <youtube>FB__jfe6UhE</youtube></center> // COLOCAR CON EL C'ODIGO DE LA WIKI CORRESPONDIENTE PARA VIDEOS DE YOUTUBE
+<center>"Prueba salida digital2"</center>
+<center> <youtube>RwY8WByB3uk</youtube></center> // COLOCAR CON EL C'ODIGO DE LA WIKI CORRESPONDIENTE PARA VIDEOS DE YOUTUBE
+<center>"Prueba salida análoga2"</center>
+
+Videos de funcionamiento para CH4

@@ -1,0 +1,103 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>Data Center Methane Sensor for Cattle</title>
+  <meta name="description" content="website description" />
+  <meta name="keywords" content="website keywords, website keywords" />
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <link rel="stylesheet" type="text/css" href="css/style.css" />
+  <!-- modernizr enables HTML5 elements and feature detects -->
+  <script type="text/javascript" src="js/modernizr-1.5.min.js"></script>
+</head>
+
+<body>
+  <div id="main">
+    <header>
+      <div id="logo">
+        <div id="logo_text">
+          <!-- class="logo_colour", allows you to change the colour of the text -->
+          <h1><a href="index.html"><span class="logo_colour">CATTLE SENSOR</span></a></h1>
+          <h2>   SENSOR PARA GANADO</h2>
+        </div>
+      </div>
+            <nav> 
+        <ul class="sf-menu" id="nav">
+          <li><a href="index.html">Pagina Principal</a></li>
+          <li class="selected"><a href="about.html">Descripción del Proyecto</a></li>
+           <li><a href="#">Datos y Resultados</a>
+            <ul>
+              <li><a href="resume.html">Resumen</a></li>
+              <li><a href="statistics.html">Estadisticas</a></li>
+              <li><a href="data.html">Datos</a></li>
+              <li><a href="plots.html">Graficas</a></li>
+              <li><a href="#">Analisis de Datos</a>
+                <ul>
+                  <li><a href="integrals.html">Integrales</a></li>
+                  <li><a href="derivates.html">Derivadas</a></li>
+                  <li><a href="frecuency.html">Analisis en Frecuencia</a></li>
+                  <li><a href="modelpredictive.html">Modelo Predictivo</a></li>
+                  <li><a href="modelexplanatory.html">Modelo Explicativo</a></li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li><a href="blog.html">Noticias Importantes</a></li>         
+          <li><a href="portfolio.html">Portafolio de Desarrollos</a></li>                   
+
+        </ul>
+      </nav>
+    </header>
+    <div id="site_content">
+      <div id="sidebar_container">
+        <div class="gallery">
+          <ul class="images">
+            <li class="show"><img width="450" height="450" src="images/indexImages/1.jpg" alt="photo_one" /></li>
+            <li><img width="450" height="450" src="images/indexImages/2.jpg" alt="photo_two" /></li>
+            <li><img width="450" height="450" src="images/indexImages/3.jpg" alt="photo_three" /></li>
+            <li><img width="450" height="450" src="images/indexImages/4.jpg" alt="photo_four" /></li>
+            <li><img width="450" height="450" src="images/indexImages/5.jpg" alt="photo_five" /></li>
+          </ul>
+        </div>
+      </div>
+      <div id="content">
+        <h1>Acerca del Proyecto</h1>
+        <p>Las emisiones de contaminación mundial cada día se hacen mayores 
+        con el aumento del mal manejo de la mano del hombre. 
+        Muchas de estas emisiones componen gases tóxicos (para grandes proporciones) 
+        de CO2, CO, CH4, NH4, butano, entre otros. Una de las formas de controlar este aumento 
+        excesivo es iniciar con la cuantificación de las concentraciones emitidas diariamente. 
+        Para ello, el proyecto final de Arquitectura y Diseño de Sistemas Digitales implementa 
+        en la tarjeta de programación Beagle Bone Black un sistema de medición 
+        sensorial de gases ambientales. Se desea, además, que el sistema sea capaz de tomar los datos 
+        por medio de un sensor, los visualice en un servidor y los pueda enviar a otro. 
+        Esto, con el fin del simular el envío a larga distancia de medidas ambientales a 
+        centros metereológicos desde lugares remotos como fincas o fábricas en las afueras.
+
+        <p>Con el proyecto se desarrollan habilidades de programación e 
+        implementación de periféricos que permiten reconocer la 
+        importancia de un dispositivo como la BeagleBone Black
+        en la solución de problemas de la actualidad.
+        Un problema especIifico a tratar es la medición de metano 
+        producido por el ganado, en especial las vacas.
+        Estos animales son los causantes de la mayor parte de contaminación que genera 
+        el agujero en la capa de ozo, de ahí su importancia </p>
+
+      </div>
+    </div>
+    <footer>
+      <p>Proyecto creado por WallamejorgeInc ,TutiCorp y Juanfe Asociados </p>
+    </footer>
+  </div>
+  <!-- javascript at the bottom for fast page loading -->
+  <script type="text/javascript" src="js/jquery.js"></script>
+  <script type="text/javascript" src="js/jquery.easing-sooper.js"></script>
+  <script type="text/javascript" src="js/jquery.sooperfish.js"></script>
+  <script type="text/javascript" src="js/image_fade.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('ul.sf-menu').sooperfish();
+    });
+  </script>
+</body>
+</html>

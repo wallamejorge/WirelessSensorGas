@@ -1,0 +1,672 @@
+<center>[[File:BannerGeneralTutorial.png]]</center>
+
+----
+
+__TOC__ 
+=Autores=
+
+* by {{signature|nombreapellido=Juan Felipe Martinez|login=jf.martinez1554}}
+* by {{signature|nombreapellido=Jorge Luis Mayorga|login=jl.mayorga236}}
+* by {{signature|nombreapellido=Monica Tuta Fajardo|login=mj.tuta172}}
+
+= Introducción a la BeagleBone Black =
+
+----
+
+La tarjeta de desarrollo BeagleBone Black (R) es una plataforma hardware donde pueden diseñarse, compilarse y ejecutarse códigos utilizando lenguajes desde bajo nivel hasta programación de muy alto nivel. Suele llamarsele a la BeagleBone como un mini computador ( dado su reducido tamaño y bajo costo ), sin embargo, la beaglebone black posee todo el poder de computo necesario para proyectos ambiciosos.
+
+La beaglebone black suele conseguirse por un valor aproximado de 45$ e incluye un procesador de 1 GHz ARM Cortex-A8, Memoria RAM de 512 MB DDR3, soporte para video HDMI , puerto para ethernet, puerto USB , entre muchas otras. 
+
+El sistema operativo por default de la BeagleBone Black es Linux Amstrong (R)
+
+<center>  <youtube>ciX08ysl6LE</youtube></center>
+
+* 1 Procesador TI Sitara AM3359 1-GHz superscalar ARM Cortex™-A8
+* 2x 200MHz ARM7 coprocesador en tiempo real programable
+* Memoria 512-MB DDR3L RAM
+* Almacenamiento 2GB eMMC
+* PowerVR SGX 530 GPU,
+* LCD expansion header,
+* micro HDMI
+* Salida estéreo audio-out vía HDMI
+* Puertos USB
+* On-chip 10/100 Ethernet
+* MicroSD slot
+* 5 puertos seriales
+* 8 salidas PWM
+* 7  convertidores Analógico/digital (1.8V max)
+
+Dado el gran poder de la tarjeta, se han desarrollado multiples proyectos que van desde una simple aplicación de instrumentación electronica,hasta proyectos como sistemas autonomos, seguidores de lineas, interacción entre la plataforma física (hardware) y un sistema con plataforma android, en la siguente figura se pueden observar algunos proyectos ya realizados en todo el mundo utilizando la Beaglebone.
+
+<center>[[File:proyectosbeagle.png|530px]]</center>
+
+Es importante resaltar que la Beaglebone al funcionar utilizando el sistema operativo linux Amstrong ( en general cualquier sistema operativo ) el uso de los puertos no es de manera directa como se utilizaría en un micro controlador , en este caso para configurar, acceder y trabajar con los puertos y perifericos es necesario modificar los directorios y sus contenidos y así controlar la tarjeta.
+
+=Primeros Pasos...=
+
+== Conociendo... la Terminal ==
+[[File:Banner2.png]]
+
+Dado que el SO (Sistema Operativo) de la tarjeta por default es Linux Amstrong, es necesario familiarizarnos con la terminal de Linux para poder trabajar con la BeagleeBone Black de manera mas facil, intuitiva y eficaz.
+
+La terminal de Linux es una herramienta muy potente que sin embargo, al comienzo puede ser un poco tedioso se aprender a utilizar, pero una vez dominada resulta una herramienta indispensable para el uso en sistemas operativos en base a UNIX (MAC OS, UBUNTU, DEBIAN, distros Linux, entre otras ).Esta terminal permite el acceso a nuestro computador sin utilizar un ambiente grafico.Como primera medida, es importante resaltar como acceder a ella,esto ingresando al bash del sistema  y buscando la palabra Terminal , con lo cual una vez ya se hemos podido acceder a la consola encontraremos que ya tiene escritos dos palabras :
+ <center>[[File:Bash.png|700px]]</center>
+Una vez tenemos la ventana de la terminal debemos revisar que el usuario sobre el que estamos trabajando no sea invitado , es decir que debe aparecer un usuario seguido de un @ , luego el nombre de la PC , : , y un signo $ :
+     usuario@nombredePC:~$ 
+Gracias a esto podremos usar el comando "sudo" sin nigun problema.
+
+Los comandos mas importantes para comenzar a utilizar la terminal son (el signo $ ya lo pone la terminal, asi que no es necesario copiarlo, es para denotar que se debe escribir ese comando):
+
+* $sudo               => Da poderes de super usuario para realizar modificaciones especiales, ejecutar comandos que pueden tener restricciones, etc.
+*$cd                    => Cambia el directorio que estamos trabajando 
+**$cd /carpeta1/carpeta11/carpeta111/carpeta1111/          =>Ahora estamos en la carpeta1111 
+**$cd ..               =>Regresa al directorio anterior , en este ejemplo seria carpeta111
+**$cd                  =>vamos al directorio principal (Home)
+**$cd /                =>Accedemos a las carpetas del sistema (en windows seria como entrar a system32 o la carpeta del disco C "Windows")        
+*$ls                   =>Muestra la lista de los contenidos en la carpeta sobre la que estamos
+* CTRL + l           => limpia la consola (es como el clc de matlab)
+*$pwd                 =>Nos dice el directorio donde estamos trabajando 
+*$rm                   =>Borrar archivos o directorios
+*$mkdir  nombre     =>Crea un directorio(carpeta)  de nombre "nombre"
+----
+=== Primeros  Comandos ... creando un directorio ===
+
+Primero, al abrir la terminal tendremos una ventana del siguente estilo:
+
+ <center>[[File:terminalLinux2.jpg|500px]]</center>
+
+Donde comenzaremos a escribir comandos y familiarizarnos con la consola para trabajar así la beaglebone Black.El primer comando que vamos a utilizar una ves tengamos la BeagleBone Black Conectada a la PC vía USB es :
+     $cd ~
+Lo que nos ubicara en el directorio Home , para comprobar que ha funcionado utilizamos el comando ls ( para  ver los archivos )
+     $ls 
+Si todo ha funcionado bien, deberíamos tener una lista de carpetas  y archivos en la terminal con nombres como :
+
+*Documents ( o Documentos si esta en español) 
+
+*Music( o Musica  si esta en español)
+
+*Download (o Descargas si esta en español)
+
+<center>[[File:lslinux.png|500px]]</center>
+
+Sobre este directorio vamos a ubicar una carpeta para trabajar los archivos fuentes que necesitemos  ( carpeta de trabajo) o si se requiere trabajar en equipo de una forma mas profesional vamos a utilizar un Git  ( alojado en Github.com ) que mas adelante se explicara  en detalle, por ahora es importante organizar nuestro espacio de trabajo.
+
+Para escoger un directorio de trabajo utilizamos el comando "cd" que vimos anteriormente pero esta vez nos vamos a mover a una carpeta / directorio diferente a HOME , por ejemplo a Documents :
+
+     $cd Documents/
+
+TIP: La terminal de Linux tiene una función muy útil y es auto completar las palabras , es decir que si estamos en la carpeta HOME y escribimos cd /Do   y luego la tecla tab (OJO SIN DAR ENTER) y la terminal completara la palabra que estábamos escribiendo, es decir Documents.
+
+Para crear nuestro directorio de trabajo simplemente utilizamos el comando mkdir :
+
+     $mkdir WorkFolder 
+
+Y se creara en /Documents una carpeta llamada WorkFolder en la cual vamos a trabajar , para acceder a esta carpeta simplemente usamos cd para ingresar
+
+    $cd WorkFolder
+
+y ya estamos dentro del directorio para crear documentos y todo lo que necesitemos para programar la BeagleBone Black.
+
+<center>[[File:mkdirCapture.png|500px]]</center>
+
+
+----
+
+=== Primeros Comandos ... creando un Repositorio Git ===
+
+Muchas veces al trabajar código en grupo, o incluso solo para tener un mejor control de las versiones se recomienda el uso de un repositorio como un Git.A diferencia de Dropbox, permite un control mas complejo y sofisticado de los archivos manejados, y gracias a que esta orientado a codigo tiene herramientas para compara lineas donde han habido cambios, hacer comentarios , etc.
+
+¿Que es GIT?
+
+Git es un software de control de versiones de proyectos. Fue desarrollado por Linus Torvalds (el creador de Linux) pensando en una forma de controlar proyectos de programadores en conjunto y como facilitar el trabajo a distancia.
+
+¿Que es GIThub?
+
+GIThub es un entorno social y amigable para el uso de control git. En esta pagina se pueden hacer comentarios, seguir personas, agregar "amigos" y muchas otras funciones de las redes sociales, pero enfocado al desarrollo de software. Esta disponible para linux, mac y windows.
+
+¿Como comenzar?
+
+Primero, hay que tener una cuenta en github, para ello solo se necesita registrarse y listo.(los pasos se enumeran con [.])
+
+<center>[[File:Github.PNG|650px]]</center>
+
+[1] https://github.com/
+
+[2] Crear cuenta:
+
+*[2.1]Pick a username (selecciona un nombre de usuario)
+
+*[2.2]your email (Asocia un email)
+
+*[2.3]Create a password (crea una contraseña, github exige que tenga al menos un numero)
+
+*[2.4] Sing Up for GitHub (dale click)
+
+
+Una vez se tiene la cuenta en github (usando linux) se puede ser parte de un proyecto o crear uno propio desde el comienzo.Las instrucciones [3] son para la creación de un proyecto nuevo (repositorio) y las instrucciones [4] son para unirse a un proyecto ya existente.
+
+[3] En la pestaña Repositories ( Contributions, Repositories,Public Activity) se encuentran los repositorios ya creados, para crear uno nuevo, nos dirigimos a NEW( all,public,source,forks, mirrors, New).
+
+Después de darle click a new, aparecerá una nueva interfaz para escoger el creador el nombre del repositorio (owner /Repository name).Tambien es importante poner una descripción del repositorio y si el repositorio es de carácter publico o privado (para privado toca pagar ).
+
+Luego (para evitar muchas lineas de código y sufrir después ) es indispensable darle check al cuadro de INITIALIZE THIS REPOSITORY WITH A README y escoger add.gitignore (C,java,pyhton,etc) y un archivo de licencia (GPL :libre libre,Apache:guarda patentes ...).
+ 
+Listo, ya esta el repositorio creado, podemos ir a nuestro usuario en la esquina superior derecha y ver nuestro usuario una hojita con un +, un destornillador con una llave inglesa y un logo de salir.
+
+Ahora saldrá en nuestra pestaña de Repositories el nuevo Repo que acabamos de crear.
+
+[4]Buscamos la persona dueña del repositorio ( puede ser nosotros mismos) y entramos al repo.
+
+*[4.1]Nos aparecerá en la parte superior el nombre del usuario seguido de una slash / y el nombre del repositorio. Abajo la descripción de repositorio y mas abajo el numero de commits hechos, el numero de branchs, el numero de releases y contributors.
+
+*[4.2]Debajo de estas estadísticas del git, vemos los archivos dentro del repositorios ( y las carpetas también) con el usuario que realizo la ultima modificación y a que horas.
+
+*[4.3] Por ultimo se vera el README del proyecto.
+
+*[4.4]Si nos dirigimos a la parte derecha de la pantalla vemos <>Code con información e issues, PUll requests, wiki, pulse, graphs, network, settings y por ultimo y mas importante el HTTP del git.
+
+*[4.5]El http del git ( no el del navegador que estaremos viendo en ese momento ) Https clone URL es la información con la cual sincronizaremos nuestra PC con el git ( asi como dropbox). Asi que copiamos esta dirección que sale en HTTPS CLONE URL.
+
+*[4.6]Nos dirigimos a nuestra carpeta en linux que queramos usar para trabajar en el proyecto, y desde la terminal usando comandos cd llegamos a ese directorio. Una vez dentro, usamos el comando :
+
+      $git clone "urldelrepositorio.git"
+
+
+<center>[[File:gitclone.png|400px]]</center>
+
+El link se cambiara según el repositorio que se necesite.
+
+Este comando git clone descargara a su computador todo el contenido del git y genera un link (indirecto ) con git.
+
+*[4.7] Una vez creada la carpeta del git, trabajamos sobre el proyecto, y a diferencia de Dropbox, este no se actualiza automáticamente, tenemos que darle una serie de comandos para subir los cambios.
+
+*[4.8] Los comandos para subir cambios son los siguientes ; lo que este entre %% es para cambiar:
+ 
+
+       $git add nombre del archivo
+
+o si se desea toda la carpeta seria git add *
+
+       $git commit -m "Mensaje de los cambios hechos"
+
+       $git push
+y  listo , si revisamos la pagina de git en internet estará actualizada con la nueva información.
+
+== Conociendo... la BeagleBone Black  ==
+
+[[File:Banner3.png]]
+
+Una vez que tenemos nuestra BeagleBone en las manos , lo primero que debemos hacer es conocer los componentes, su localización y su forma de operar.
+Como se menciono anteriormente la tarjeta tiene un procesador de 1 Ghz mono nucleo,posee saldia hdmi, puerto usb, dos set de pines input /output que son los llamados P8 Y P9 ( cada uno va desde 1 hasta el 46) y dentro de ellos estan los puertos seriales, los conversores analogo digitales  / digitales analogos , etc.
+
+La beaglebone black es una version de la beaglebone, por ello aunque muchas cosas puedan parecerse, existen algunos puertos, pines, rutas de configuración que pueden diferir de la beaglebone normalita.La Beaglebone viene con un interesante y muy completo tutorial para comenzar a utilizar la Beaglebone, sin embargo primero vamos a conocer un poco mas sobre la distribución del hardware en la tarjeta:
+
+<center>[[File:Bbb-details3.png|600px]]</center>
+
+Observado la imagen tomada de [1]
+Podemos observar claramente la ubicación del puerto ethernet, sin embargo, al lado de el, se encuentra el conector USB, con el cual vamos a comunicar la tarjeta con el computador.Tambien se pueden apreciar los cuatro leds superficiales que son el indicador de un buen funcionamiento de la beaglebone, sin embargo tambien pueden usarse en nuestras aplicaciones sin ningun problema.Estos leds (cerca del puerto ethernet) tienen los nombres de USR0, USR1,USR2,USR3 y PWR.Por default los leds tienen asignadas las siguentes funciones:
+
+*USR0 esta configurado para parpadear anunciando asi que esta funcionando correctamente
+*USR1 esta configurado como centinela de la microSD
+*USR2 esta configurado para anunciar un funcionamiento del CPU
+*USR3  esta configurado para anunciar el uso de acceso por MMC 
+
+<center>[[File:ConectionBeagle.png|550px]]</center>
+
+Lo primero al conectar la Beaglebone black al computador es esperar a que la pc reconozca el dispositivo y esta preparado para trabajar con la tarjeta ( esto puede tomar al rededor de unos 30-50 segundos) y una vez estemos listos para comenzar a utilizar nuestra tarjeta vamos a revisar el contenido de la pagina de BeagleBone.org para revisar material importante antes de comenzar a programar nuestra tarjeta.
+
+<center>[[File:Beaglewebpage.png|500px]]</center>
+
+En la Opción de Getting Start encontraermos informacion para solucionar problemas en caso de no reconocer la USB y como acceder a la BeagleBone, sin embargo, una vez conectada la BeagleBone Black a la PC por medio de USB solo es necesario esperar que el computador lo reconosca y acceder via firefox o google chrome ( En Internet explorer no funciona ) y escribir en la barra de dirección :
+ http://192.168.7.2
+Esta es la pagina web interna de la beaglebone Black donde podremos encontrar ejemplos de programacion en boneScript y acceder a otras funciones de la beagle bone, pero siempre via navegador web. [1]
+
+
+=== Primeros Comandos ... Conectando la BeagleBone Black a la PC ===
+
+----
+
+==== Realizar PING entre la BeagleBone Black y la PC====
+
+Una vez conectada la BeagleBone Black vía USB al computador abrimos la terminal para verificar la conexión de la BeagleBone Black vamos a utilizar el siguiente comando:
+
+        $ping 192.168.7.2
+
+Este comando establece una conexión de números aleatorios entre la PC y la tarjeta y así se verifica si se esta enviando y recibiendo la información adecuadamente.La consola comenzara a enviar datos aleatorios con el siguiente formato :
+
+<center>[[File:ping.png|400px]]</center>
+
+
+----
+
+==== Conectar la BeagleBone Black mediante SSH====
+
+Una vez confirmada la conexión de la BeagleBone usando el comando $ping podemos intentar conectarnos usando el comando en la consola :
+
+       $ssh -X root@192.168.7.2
+
+donde el numero 192.168.7.2 es la dirección por default de todas las BeagleBone Black, y el fragmento del comando "-X" realiza una conexión entre el entorno gráfico de Ubuntu y el sistema operativo de la BeagleBone y así poder acceder a las aplicaciones con entorno gráfico como Gedit y Firefox.
+
+<center>[[File:ssh.png|400px]]</center>
+
+y para salir de la BeagleBone y retomar el control sobre la consola podemos utilizar el siguiente comando:
+
+       $exit
+
+<center>[[File:exit.png|400px]]</center>
+
+Una vez conectados a la BeagleBone Black podremos copiar archivos desde la PC a la BeagleBone Black  y viceversa usando el siguente comando:
+
+
+   scp archivolocal usuario@maquina_remota:archivoremoto
+
+Por ejemplo , si queremos copiar un archivo llamado demo.txt que tenemos en ~/Documentos/Work/demo.txt y lo queremos copiar a la carpeta de la BeagleBone Escritorio :
+
+   scp ~/Documentos/Work/demo.txt root@192.168.7.2:~/Escritorio
+
+Y para copiar de la BeagleBone Black a la PC usamos :
+
+  scp root@192.168.7.2:directorioBeagle/archivo.txt ~/directoriopc/
+
+
+
+
+==== Entorno de Programación ====
+
+La tarjeta de desarrollo viene con un servidor web basado en html que contiene un extenso tutorial , librerías para BoneScript (el lenguaje de programación de la Beagle, aunque también  se puede programar en C, java, C++, etc.Para acceder a estos manuales y guias es necesario abrir en firefox/Chrome la siguente dirección :
+
+     http://192.168.7.2
+
+<center>[[File:beaglehtml.png|500px]]</center>
+
+En este portal existen varios tutoriales y ejemplos para comenzar a utilizar la BeagleBone Black usando BoneScript.Para comenzar a probar la BeagleBone vamos a analizar el primer ejemplo que encontramos en el portal:
+
+<center>[[File:ledstest.png|500px]]</center>
+
+
+En este ejemplo se encienden los LEDS USR que habíamos caracterizado anteriormente. En el código se utiliza gracias a BoneScript ya existen múltiples funciones para utilizar los periféricos (Hardware)
+como por ejemplo la función pinMode() que define si el pin es de salida o de entrada.
+digitalWrite() que permite escribir una señal lógica ( 1 lógico = 3.3v) y usando la función se setTimeout se puede mantener el estado de los leds antes de que el código termine y se apaguen los leds.
+Para probar este ejemplo solo basta seleccionar "run" .
+
+<center>[[File:testLeds.png|350px]]</center>
+
+La BeagleBone viene con un entorno de desarrollo para programar en BoneScript,C,java,etc. Llamado Cloud9 al cual se puede acceder mediante Firefox ingresando la siguente url:
+
+     http://192.168.7.2:3000/
+
+<center>[[File:cloud9capture.png|500px]]</center>
+
+== Conociendo... la programación en C  ==
+[[File:Banner4.png]]
+
+Primero que todo, vamos a conocer un poco del lenguaje C para poder hacer nuestros programas y correrlos en la BeagleBone Black. Aun cuando la Beagle Bone soporta otros lenguajes como java, python, entre otros, el lenguaje C sigue siendo una herramienta poderosa , muy rápida, limpia , eficiente y con mucho soporte.
+
+El código C podemos descomponerlo es tres bloques muy generales :
+*Librerías
+*Función Main
+*Funciones auxiliares
+
+Un ejemplo de nuestro primer código seria :
+
+    #include <stdio.h>
+    void main ( void )
+    {
+       saludo( );
+
+
+       primer_mensaje( );
+    }
+     void saludo(void )
+    {
+    printf ("Buenos dias\n");
+    }
+
+Donde podemos identificar las librerias como los archivos de codigo con funciones predefinidas que nos pueden ayudar mucho, mas adelante vamos a hablar de la libreria BBBio.h que se desarrollo para el proyecto y facilita mucho algunos procesos con la BeagleBone Black.
+
+La linea :
+
+         #include <stdio.h>
+
+Codifica la llamada de una librería de funciones llamadas standar Input Ouput como manejar datos, sumar, restar, crear variables, imprimir en consola,etc.
+
+Las lineas :
+
+      void main ( void )
+        {
+       saludo( );
+         }
+
+Se encargan de definir la función main como una función tipo vacío ( no retorna nada ) y que tiene como parámetros vacío (no necesita parámetros) ; la linea de saludo(); llama a la función saludo y ejecuta las lineas de código que ella contiene.Los tipos de variable y datos mas comunes en C son:
+*void
+*int
+*double
+*float
+*char
+
+=== Compilación ===
+Para poder correr un programa en C es necesario utilizar un compilador para generar un ejecutable, desde linux solo basta una linea :
+     $cc main.c 
+
+y se generar un archivo por default llamado a.out para correrlo se utiliza el comando
+
+     $./a.out
+
+Sin embargo, muchas veces , es mejor utilizar un archivo llamado makefile que automatiza el proceso de compilación.
+
+==== Creación de un makefile ====
+
+Para la creación de un makefile sencillo vamos a abrir gedit usando el siguente comando:
+      $gedit & 
+
+El símbolo & lo que permite es que se siga ejecutando en segundo plano gedit y no perdamos el control sobre la consola.
+
+Deberíamos tener una imagen como la siguiente en la ventana:
+
+<center>[[File:bash_Gedit.png|400px]]</center>
+
+En esta ventana escribiremos el siguiente código y lo guardamos con el nombre makefile :
+<center>[[File:makefilegedit.png|400px]]</center>
+
+La idea es que podamos personalizar nuestros makefile según lo necesitemos, por esta razón 
+de modo que si solo necesitamos para este ejemplo automatizar un proceso sencillo de compilación para main.c tendríamos que escribir lo siguiente :
+
+     main:cc main.app main.c
+
+Es importante anotar que las lineas comando archivo1 .... esta tabuladas ( con la tecla tab) de lo contrario, makefile no entenderá las instrucciones.
+
+En esta linea de codigo anterior, hemos cambiado un poco la estructura  y ahora tenemos un main.app , esta es una convención para los ejecutables dado que "cc" tiene como característica que puede usare para que el archivo a.out tenga otro tipo de nombre y extencion solamente indicándolo antes del main.c, en este caso use la extencion .app por gusto, pero puede usarse cualquier otro.
+
+Vamos ahora a crear un makefile para automatizar la copia de multiples archios a la BeagleBone Black creando un makefile con el siguente codigo :
+ 
+     BBBcp: main.c BBBio.h makefile
+        scp mainc.c BBBio.h makefile root@192.168.7.2:Desktop
+
+Hasta ahora hemos compilado nuestros codigos C usando el compilador de linux llamado cc, pero este compilador no es reconocido por la BeagleBone Black , razon por la cual es necesario usar el compilador de la BeagleBone Black :
+
+     arm-angstrom-linux-gnueabi-gcc -o nombredelejecutable nombredemiprogramaenC.c
+
+Es recomendable que se maneje una extension comun para los ejecutables, como buena practica se recomienda usar la extencion .app para diferenciarla de los demas tipos de archivos.
+
+=== Programando usando la BBBio.h===
+
+La libreria BBBio.h ha sido desarrollada para ahorrar inconvenientes a la hora de usar la beaglebone black, esto dado que para acceder a los puertos es necesario realizar configuraciones un tanto complicadas que serán explicadas mas adelantes, pero por ahora vamos a aprovechar la potencia de la librería para encender y apagar un puerto digital de la BeagleBone.
+
+== Conociendo... los Puertos  ==
+[[File:Banner5.png]]
+
+La BeagleBone Black tiene puertos seriales , analogos y digitales IO.
+Para la configuracion de los puertos IO digitales vamos a conocer un poco como funciona la BeagleBone Black.
+En vista de que no estamos usando un microprocesador sencillo, sino que estamos trabajando en una tarjeta con varios perifericos embebidos, el acceso necesita un sistema de mapeo utilizando un intermediario llamado SISTEMA OPERATIVO.
+
+Para el caso de la BeagleBone Black el sistema operativo por default es Linux Amstrong y para acceder a la configuracion de la tarjeta se modifican archivos de texto ubicados en diversos directorios de sistema operativo. Para entender mejor esto, vamos a configurar los puertos GPIO (General Purpose Input Output )  :
+
+*Entrar a la terminal y acceder a la BeagleBone Black
+*Desde la BeagleBone Black acceder a la carpeta de configuracion del sistema con :
+    cd /
+   <center>[[File:GPIOterminal.png]]</center>
+*En la carpeta gpio dentro de class en sys vamos a encontrar 
+  <center>[[File:gpiodir.png]]</center>
+
+*Como vemos, exiten algunos puertos, pero otros no , esto es gracias a que previamente hemos exportados los puertos presentes en la BeagleBone Black, y si quieres habilitar otro puerto es necesario exportarlo usando:
+
+    echo 44 > /sys/class/gpio/export
+
+Con esta linea de codigo lo que estamos es modificando el archivo export y agregando una linea con la información del puerto que queremos exportar.Nota: Los puertos son P8=1, P9=2, Y la formula para calcular el numero de puerto es :
+
+#Puerto=P8*32+no.Puerto,   ejemplo :   Puerto P8 12 => 1*32+12=44
+
+
+*Accedemos al puerto que hemos creado y vemos el contenido:
+   ls /sys/class/gpio/gpio44/
+
+y debemos encontrar carpetas como  :
+active_low  direction  edge  power  subsystem  uevent  value
+
+*Cambiando el contenido de direction de input a output podemos definir si es entrada o salida
+*Leyendo el archivo value sabemos si hay un 1 logico o 0 logico:
+  cat value
+
+
+
+
+
+Los puertos seriales se nombran  UART y van desde el 0 hasta el 5.
+Los pertenecientes a 0 vienen configurados por default como seriales, es decir, no se debe realizar una configuración extra. Estos puertos se encuentran en la parte interior de los pines laterales<br>
+En cuanto a los puertos 1,2,3,4,5 se encuentran señalados en la imagen con color amarillo y blanco y deben ser configurados tal como se explica en secciones próximas. Para estos puertos es importante tener en cuenta RX y TX (amarillo) para la lectura y escritura de información.
+Una prueba sencilla del funcionamiento de estos puertos es hacer un corto entre RX y TX y ve r si al escribir en el servidor Beagle Bone Black se reciben los mismos datos enviados
+[[File:UARTBEAGLE.jpg]]
+
+== Probando... con Blinking Led ==
+
+
+Ahora bien, para mostrar el funcionamiento del código en C se mostrará a continuación el código implementado para realizar blinking led 
+
+La idea es reconocer por medio del encendido y apagado de los LEDs presentes en la Beagle Bone Black y, adicionalmente, mostrar un saludo de inicio para comprobar un buen funcionamiento <br>
+<br>
+|___________________________________________________________________________________|
+<br>
+|Nombre:BlinkingLed.c                                                                                                                                   |<br>
+|Compilador:ARM                                                                                                                                           |<br>
+|Entradas:ninguna                                                                                                                                          | <br>
+|Salidas:Mensaje de Bienvenida en bash y led P8_12 enciende                                                                   |<br>
+|Autores : Jorge Luis Mayorga Taborda, Monica Tuta Fajardo, Juan Felipe Martinez                                 |<br>
+|___________________________________________________________________________________|<br>
+
+
+
+//--------------------------------------------------------//<br>
+//------------Declaraciones Librerias---------------//<br>
+//--------------------------------------------------------//<br>
+#include <stdio.h>
+#include <unistd.h>
+#include <string.h>
+//--------------------------------------------------------//
+
+//--------------------------------------------------------//<br>
+//------------Declaraciones Funciones-------------//<br>
+//--------------------------------------------------------//<br>
+void Welcome(void);<br>
+void test_LEDS(void);<br>
+void test_DigitalOut(void);<br>
+void test_DigitalInput(void);<br>
+//--------------------------------------------------------//<br>
+
+
+
+
+//-------------------------------------------------------//<br>
+//----------------Funcion Principal------------------//<br>
+//------------------------------------------------------//<br>
+int main(int argc, char **argv)<br>
+{
+int pinIn=60;<br>
+int pinOut=44;<br>
+int entrada=0;<br>
+int analogdev=0;<br>
+Welcome();<br>
+while (1==1){<br>
+
+entrada=PIN_VALUE(pinIn);<br>
+printf("El valor del pin es :%d \n",entrada);<br>
+if(entrada==0){PIN_OFF(pinOut);}<br>
+else{PIN_ON(pinOut);}<br>
+<br>
+
+entrada=ANALOG_READ(analogdev);<br>
+printf("El valor del pin es :%d \n",entrada);<br>
+}<br>
+}<br>
+//-----------------------------------------------------//<br>
+
+//-----------------------------------------------------//<br>
+//-----------------Función Welcome--------------//<br>
+//-----------------------------------------------------//<br>
+void Welcome(void)
+{
+  printf(" ______________________________ \n");
+  printf("|..............................|\n");
+  printf("|..............................|\n");
+  printf("|BEAGLEBONE BLACK.....is alive!|\n");
+  printf("|..............................|\n");
+  printf("|....Welcome to BlinkingLed....|\n");
+  printf("|..............................|\n");
+  printf("|______________________________|\n");
+}
+//---------------------------------------------------//
+
+=Configurando Hardware=
+
+
+== Configurando... los Puertos GPIO y Seriales ==
+8//----------------------------------------Habilitación de puertos seriales-----------------------------------------------------//
+<br>
+Se requiere habilitar estos puertos para la utilización del GPS
+<br>
+8.1 Descargar de la Wiki los paquetes de archivos correspondientes según el puerto requerido UART1,2,3,4,5. 
+<br>
+8.1 Estos archivos se descargarán automáticamente en el PC
+<br>
+8.2 Copiar archivos a la beagle Bone Black con los comandos descritos en Makefile
+<br>
+8.3 Ejecutar desde terminal  beagle:  $/lib/firmware# export SLOTS=/sys/devices/bone_capemgr.8/slots
+<br>
+8.4 Ejecutar desde terminal bealge: $/lib/firmware# echo ttyO2_armhf.com > $SLOTS.<br>
+8.4 El 2 de ttyO2 puede ser reemplazado según el puerto
+<br>
+8.5 Termial: minicom -s 
+8.6 Seleccionar opción serial port setup 
+<br> 
+8.7 Para modificar el puerto a habilitar, seleccionar opción A y modificar /dev/ttyS1 con S el número de puerto a 
+<br>
+8.7 habilitar (0,1,2,3,4,5). Intro
+<br>
+8.8 Deshabilitar control de flujo: Seleccionar opción F : Hardware Flow Cotrol : No. Intro
+<br>
+8.9 Control de flujo de bits y formato de palabra opción E. Si se quiere una tasa que no está en la lista se selecciona 
+<br>
+8.9 A o B según se requiera.Intro
+<br>
+8.10 Save setup as dFL <br>
+8.11 Exit (del minicom)
+
+== Configurando... los puertos ADC==
+*Ver configuración [http://157.253.195.181/ttdewikim1/index.php/13_20_ADSD_P3_G2  ADC...]
+
+== Configurando... un servidor ! ==
+1.a//------------------------------------------------Conect Server2 to PC-------------------------------------------------------//
+<br>
+1.1.a Descargar aplicación en el otro dispositivo (de ser necesario) para ser manejado como servidor.
+<br>
+1.1.a Un ejemplo de aplicación para Android es Servers Ultimate
+<br>
+1.2.a Abrir terminal de linux
+<br>
+1.3.a terminal: ping IPServer2
+<br>
+1.4.a terminal: ssh -X usuario@IPServer2 -P #puerto
+<br>
+1.5.a Nota1: el #puerto puede ser,por ejemplo ,2222
+<br>
+1.6.a Nota2: Password asignado por el usuario
+<br>
+//--------------------------------------------------------------------------------------------------------------------------------------//
+<br>
+<br>
+<br>
+2.//-----------------------------------------Copiar archivo a PC u otro server---------------------------------------------------//
+<br>
+2.1 Abrir terminal de la Beagle (Pasos 1)
+<br>
+// Caso PC
+<br>
+2.2.PC terminal: scp archivo.c NombredelCliente@IPCLiente:/directorio/directorio/directorio
+<br>
+// Caso server diferente
+<br>
+2.2.S terminal: scp -P #puerto archivo.c NombredelCliente@IPCLiente:/directorio/directorio/directorio
+<br>
+//El #puerto por ejemplo puede ser 2222
+<br>
+//-------------------------------------------------------------------------------------------------------------------------------------//
+
+== Configurando... el GPS==
+<center>[[File:GpsBeagle.png]]</center>
+<center>'''GPS L70'''</center>
+<center>[[File:GPSmontaje.jpg|500px]]</center>
+<center>[[File:GPSmontajeBeagle.jpg|500px]]</center>
+<center>'''Montajes GPS'''</center>
+
+8//------------------------------------------------------Habilitación de puertos seriales----------------------------------------------------------------------------//
+<br>
+Se requiere habilitar estos puertos para la utilización del GPS
+<br>
+8.1 Descargar de la Wiki los paquetes de archivos correspondientes según el puerto requerido UART1,2,3,4,5.
+<br>
+8.1  Estos archivos se descargarán automáticamente en el PC
+<br>
+8.2 Copiar archivos a la beagle Bone Black con los comandos descritos en Makefile
+<br>
+8.3 Ejecutar desde terminal beagle: $/lib/firmware# export SLOTS=/sys/devices/bone_capemgr.8/slots
+<br>
+8.4 Ejecutar desde terminal bealge: $/lib/firmware# echo ttyO2_armhf.com > $SLOTS. El 2 puede ser reemplazado según el puerto
+<br>
+8.5 Termial: minicom -s
+<br>
+8.6 Seleccionar opción serial port setup
+<br>
+8.7 Para modificar el puerto a habilitar, seleccionar opción A y modificar /dev/ttyS1 con S el número de puerto a
+<br>
+8.7 habilitar (0,1,2,3,4,5). Intro
+<br>
+8.8 Deshabilitar control de flujo: Seleccionar opción F : Hardware Flow Cotrol : No. Intro
+<br>
+8.9 Control de flujo de bits y formato de palabra opción E. Si se quiere una tasa que no está en la lista se selecciona
+<br>
+8.9 A o B según se requiera.Intro
+<br>
+8.10 Save setup as dFL
+<br>
+8.11 Exit (del minicom)
+<br>
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------//
+<br>
+<br>
+9//------------------------------------------------------Conexión y obtención de datos GPS----------------------------------------------------------------------//
+<br>
+9.1 Conectar pines TX y RX de la BeagleBone a los pines de RX y TX, respectivamente. Es decir, TX Beagle con RX GPS
+<br>
+9.1  y RX Beagle con TX GPS.
+<br>
+9.1   Por ejemplo, si se usa el UART2 los pines correspondientes de la Beagle Bone son 21 para TX y 22 para RX.
+<br>
+9.2 Los datos van a llegar en 6 lineas (GPRMC,GPVTG,GPGGA,GPGSA,GPGSV,GPGLL) donde GPGLL contiene la información de
+<br>
+9.3  posición del GPS con el formato : longitud,norte/sur,longitud,East/West,Utc Time,V=invalid-A=valid,
+<br>
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------//
+
+== Configurando... el GPRS==
+*Ver configuración [http://157.253.195.181/ttdewikim1/index.php/13_20_ADSD_P3_G1  GPRS...]
+
+== Configurando... una Web Cam==
+*Ver configuración [http://157.253.195.181/ttdewikim1/index.php/13_20_ADSD_P3_G3  Web Cam...]
+
+= Usando la libreria BBBio.h =
+
+==Ejemplos de la libreria en C==
+--BBBcp: BlinkingLed.c BBBio.h makefile <br>
+scp BlinkingLed.c BBBio.h SetPin.c ClearPin.c makefile root@192.168.7.2:Desktop<br>
+--BBBcBlink: BlinkingLed.c<br>
+arm-angstrom-linux-gnueabi-gcc -o BlinkingLed.app BlinkingLed.c<br>
+--BBBcSet: SetPin.c<br>
+arm-angstrom-linux-gnueabi-gcc -o SetPin.app SetPin.c<br>
+--BBBcClear: ClearPin.c
+arm-angstrom-linux-gnueabi-gcc -o ClearPin.app ClearPin.c<br>
+
+= Primeros Programas=
+== Visualización en Google Maps==
+[[File:MAPAGPS.PNG]]
+
+= BIBLIOGRAFIA =
+* [1] Armstrong, D. ''Getting Started with BeagleBone Black''. (2013) ([http://www.circuidipity.com/getting-started-with-beaglebone-black.html Descargar...])
