@@ -23,8 +23,7 @@ Index
 
   *Folders:
 
-      **backup:Se guarda un backup de la wiki temporal y de los tutoriales, 
-      manuales, codigos imporantes,etc.
+      **backup:Se guarda un backup de la wiki temporal y de los tutoriales, manuales,etc.
   
       **docs:Se almacenan los manuales de las librerias, PCB, prototipos,etc.
   
