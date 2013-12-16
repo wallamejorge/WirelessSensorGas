@@ -1,0 +1,107 @@
+//////////////////////////////////////////////////////////////
+//////////// Codigos Basicos BeagleBone ///////////
+//////////////////////////////////////////////////////////////
+
+1.//------Conect BeagleBone to PC-------//
+1.1 Conectar BeagleBone a la pc por usb
+1.2 Abrir terminal de linux
+1.3 terminal: ping 192.168.7.2
+1.4 terminal: ssh -X root@192.168.7.2
+1.5 Nota: No hay password
+//----------------------------------------//
+
+1.a//------Conect Server2 to PC-------//
+1.1.a Descargar aplicación en el otro dispositivo (de ser necesario) para ser manejado como servidor
+1.2.a Abrir terminal de linux
+1.3.a terminal: ping IPServer2
+1.4.a terminal: ssh -X usuario@IPServer2 -P #puerto
+1.5.a Nota1: el #puerto puede ser,por ejemplo ,2222
+1.6.a Nota2: Password asignado por el usuario
+//----------------------------------------//
+
+
+2.//------Copiar archivo a PC u otro server-------//
+2.1 Abrir terminal de la Beagle (Pasos 1)
+// Caso PC
+2.2.PC terminal: scp archivo.c NombredelCliente@IPCLiente:/directorio/directorio/directorio
+// Caso server diferente
+2.2.S terminal: scp -P #puerto archivo.c NombredelCliente@IPCLiente:/directorio/directorio/directorio
+//El #puerto por ejemplo puede ser 2222
+//----------------------------------------//
+
+3.//------Comando para enviar salida de consola------//
+3.1 dato >> archivo.txt
+3.2 comando | tee archivo.txt
+//---------------------------------------------------//
+
+
+4.//--------Arreglar problema de known hosts--------//
+4.1 rm -rf /root/.ssh/known_hosts
+//---------------------------------------------------//
+
+5//--------Abir editor de codigo--------------//
+5.1 http://192.168.7.2:3000/
+//----------------------------------------------//
+
+
+6.//--------Compilar dentro de la BeagleBone-------//
+<<<<<<< HEAD
+6.1 Entrar dentro de la beaglebone por consola (pasos 1)
+6.2 ejecutar arm-angstrom-linux-gnueabi-gcc -o nombredelejecutable nombredemiprogramaenC.c
+//---------------------------------------------------//
+
+7//-----------Copiar archivos desde la PC a la beagle------------//
+7.1 scp archivolocal usuario@maquina_remota:archivoremoto
+//---------------------------------------------------------------//
+=======
+6.1   Entrar dentro de la beaglebone por consola (pasos 1)
+6.2   ejecutar arm-angstrom-linux-gnueabi-gcc -o nombredelejecutable nombredemiprogramaenC.c
+//---------------------------------------------------//
+
+7a//-----------Copiar archivos desde la PC a la beagle------------//
+7.1.a  scp archivolocal usuario@maquina_remota:archivoremoto
+//---------------------------------------------------------------//
+
+7b//-----------Copiar archivos desde la beagle al PC------------//
+7.1.b  scp root@192.168.7.2:directorioBeagle/archivo.txt ~/directoriopc/
+//---------------------------------------------------------------//
+
+8//-------------Habilitación de puertos seriales-----------------//
+Se requiere habilitar estos puertos para la utilización del GPS
+8.1 Descargar de la Wiki los paquetes de archivos correspondientes según el puerto requerido UART1,2,3,4,5. 
+    Estos archivos se descargarán automáticamente en el PC
+8.2 Copiar archivos a la beagle Bone Black con los comandos descritos en Makefile
+8.3 Ejecutar desde terminal  beagle:  $/lib/firmware# export SLOTS=/sys/devices/bone_capemgr.8/slots
+8.4 Ejecutar desde terminal bealge: $/lib/firmware# echo ttyO2_armhf.com > $SLOTS. El 2 puede ser reemplazado según el puerto
+8.5 Termial: minicom -s 
+8.6 Seleccionar opción serial port setup  
+8.7 Para modificar el puerto a habilitar, seleccionar opción A y modificar /dev/ttyS1 con S el número de puerto a 
+    habilitar (0,1,2,3,4,5). Intro
+8.8 Deshabilitar control de flujo: Seleccionar opción F : Hardware Flow Cotrol : No. Intro
+8.9 Control de flujo de bits y formato de palabra opción E. Si se quiere una tasa que no está en la lista se selecciona 
+    A o B según se requiera.Intro
+8.10 Save setup as dFL
+8.11 Exit (del minicom)
+//--------------------------------------------------------------//
+
+9//---------------Conexión y obtención de datos GPS-------------//
+9.1 Conectar pines TX y RX de la BeagleBone a los pines de RX y TX, respectivamente. Es decir, TX Beagle con RX GPS 
+    y RX Beagle con TX GPS.
+    Por ejemplo, si se usa el UART2 los pines correspondientes de la Beagle Bone son 21 para TX y 22 para RX.
+9.2 Los datos van a llegar en 6 lineas (GPRMC,GPVTG,GPGGA,GPGSA,GPGSV,GPGLL) donde GPGLL contiene la información de
+    posición del GPS con el formato : longitud,norte/sur,longitud,East/West,Utc Time,V=invalid-A=valid,
+>>>>>>> 6e5cbfa3ea3f32c27acee3ffb9698f50657ff670
+
+more /dev/ttyO2 > testjorgegps &
+
+
+10. Copiar carpetas de la bealge a la PC (ojo toca desde la PC)
+
+ scp -r root@192.168.7.2:~/Desktop/ ./Documentos/ProyectoCattleSensor/FromBeagleBone/
+ 
+ 
+11. No tener que meter contraseña para scp y ssh
+http://galileo667blog.wordpress.com/2012/11/13/conexion-ssh-y-scp-sin-necesidad-de-introducir-contrasena/
+
+12. Crear un server en python 
+http://nideaderedes.urlansoft.com/2008/09/11/python-conectar-a-un-servidor-ssh/
