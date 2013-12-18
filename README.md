@@ -42,10 +42,18 @@ Index
        **README: Archivo con informacion sobre el proyecto (Este archivo)
   
        **ABSTRAC: Resumen de los objetivos, metodologia, motivacion, soluciones, etc.
+       
   
+------------------------------------------------------------------------------------
 
+Setting Up WirelessSensorGas
 
+------------------------------------------------------------------------------------
 
+        *makefile: El makefile encontrado en el directorio home , ejecuta todos los comandos necesarios
+        para el proyecto, por ejemplo:
+        
+            **cpysrc : se ejecuta desde la PC en el directorio raiz y se copiara el contenido de src en la BeagleBone
 
 
 
