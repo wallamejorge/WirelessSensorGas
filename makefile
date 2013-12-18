@@ -10,29 +10,41 @@
 #---------------------Set Up Makefile----------------------------#
 #----------------------------------------------------------------#
 COMPILER := arm-angstrom-linux-gnueabi-gcc
-MODULOS = ventana.o gestion.o bd.o juego
+SOURCE_DIR=src
+C_SRC_DIR=c_src
 .PHONY : clean install
 #----------------------------------------------------------------#
+
+
 
 #----------------------------------------------------------------#
 #---------------------Comandos Make------------------ -----------#
 #----------------------------------------------------------------#
 
 
+
+
 #-----------------BBBcp:Copia a la Beagle------------------------#
 #----------------------------------------------------------------#
-BBBcp: BlinkingLed.c BBBio.h makefile
-	scp -r BBBio.h main.c makefile main_html.html root@192.168.7.2:Desktop
+BBBcp: 
+	scp -r backup docs html rtl scr wiki ABSTRAC.md LICENSE makefile README.md VIPcommands root@192.168.7.2:srcFiles
 #----------------------------------------------------------------#
 
 
 
 #-----------------BBBcMain:Compila Main.c------------------------#
 #----------------------------------------------------------------#	
-BBBcMain: main.c
-	arm-angstrom-linux-gnueabi-gcc -o  main.app main.c
+BBBcMain:
+	cd $(SOURCE_DIR);cd $(C_SRC_DIR);$(COMPILER) -o main.app main.c
+	
 #----------------------------------------------------------------#
 
+
+#-----------------Test:Compila test.c------------------------#
+#----------------------------------------------------------------#	
+test:	
+	cd src;cd c_src;cc -o test.app test.c
+#----------------------------------------------------------------#
 
 
 #---------------BBBrm:Elimina todo el contenido------------------#
@@ -46,6 +58,25 @@ BBBrm:
 #------------BBBrun:Elimina temporales y corre main.app----------#
 #----------------------------------------------------------------#
 BBBrun:
-	rm *.png *.txt 
-	./main.app
+	rm ./src/c/*.png ./src/c/*.txt 
+	./src/c/main.app
 #----------------------------------------------------------------#
+
+
+
+#---------------copysrc:Copia a la Beagle scr--------------------#
+#----------------------------------------------------------------#
+copysrc: 
+	scp -r scr makefile root@192.168.7.2:srcFiles
+#----------------------------------------------------------------#
+
+
+
+#---------------copyrtl:Copia a la Beagle rtl--------------------#
+#----------------------------------------------------------------#
+copyrtl: 
+	scp -r rtl makefile root@192.168.7.2:srcFiles
+#----------------------------------------------------------------#
+
+
+

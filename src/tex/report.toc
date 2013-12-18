@@ -1,0 +1,7 @@
+\select@language {spanish}
+\contentsline {section}{\numberline {1}Primera secci\~A{^3}n}{2}
+\contentsline {subsection}{\numberline {1.1}Una subsecci\~A{^3}n}{2}
+\contentsline {subsubsection}{\numberline {1.1.1}Una subsecci\~A{^3}n dentro de la subsecci\~A{^3}n}{2}
+\contentsline {paragraph}{P\~A\IeC {\textexclamdown }rrafo}{2}
+\contentsline {subparagraph}{Subp\~A\IeC {\textexclamdown }rrafo}{2}
+\contentsline {subsection}{\numberline {.1}Una subsecci\~A{^3}n m\~A\IeC {\textexclamdown }s numerada}{2}
