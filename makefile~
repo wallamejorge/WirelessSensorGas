@@ -10,7 +10,10 @@
 #---------------------Set Up Makefile----------------------------#
 #----------------------------------------------------------------#
 COMPILER := arm-angstrom-linux-gnueabi-gcc
-SOURCE_DIR= ./src/c/
+SOURCE_DIR=src
+C_SRC_DIR=c_src
+PYTHON_SRC_DIR=python_src
+LATEX_SRC_DIR=latex_src
 .PHONY : clean install
 #----------------------------------------------------------------#
 
@@ -33,16 +36,12 @@ BBBcp:
 
 #-----------------BBBcMain:Compila Main.c------------------------#
 #----------------------------------------------------------------#	
-BBBcMain: $(SOURCE_DIR)main.c
-	$(COMPILER) -o  $(SOURCE_DIR)main.app $(SOURCE_DIR)main.c
+BBBcMain:
+	cd $(SOURCE_DIR);cd $(C_SRC_DIR);$(COMPILER) -o main.app main.c
+	
 #----------------------------------------------------------------#
 
 
-#-----------------Test:Compila test.c------------------------#
-#----------------------------------------------------------------#	
-test:	
-	cd src;cd c_src;cc -o test.app test.c
-#----------------------------------------------------------------#
 
 
 #---------------BBBrm:Elimina todo el contenido------------------#
@@ -56,15 +55,14 @@ BBBrm:
 #------------BBBrun:Elimina temporales y corre main.app----------#
 #----------------------------------------------------------------#
 BBBrun:
-	rm ./src/c/*.png ./src/c/*.txt 
-	./src/c/main.app
+	cd $(SOURCE_DIR);cd $(C_SRC_DIR);rm *.png; rm *.txt;./main.app
 #----------------------------------------------------------------#
 
 
 
 #---------------copysrc:Copia a la Beagle scr--------------------#
 #----------------------------------------------------------------#
-copysrc: 
+cpysrc: 
 	scp -r scr makefile root@192.168.7.2:srcFiles
 #----------------------------------------------------------------#
 
@@ -72,9 +70,14 @@ copysrc:
 
 #---------------copyrtl:Copia a la Beagle rtl--------------------#
 #----------------------------------------------------------------#
-copyrtl: 
+cpyrtl: 
 	scp -r rtl makefile root@192.168.7.2:srcFiles
 #----------------------------------------------------------------#
 
 
 
+#-----------------Test:Compila test.c------------------------#
+#----------------------------------------------------------------#	
+test:	
+	cd $(SOURCE_DIR);cd $(C_SRC_DIR);cc -o test.app test.c
+#----------------------------------------------------------------#
