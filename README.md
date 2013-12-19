@@ -53,7 +53,15 @@ Setting Up WirelessSensorGas
         *makefile: El makefile encontrado en el directorio home , ejecuta todos los comandos necesarios
         para el proyecto, por ejemplo:
         
-            **cpysrc : se ejecuta desde la PC en el directorio raiz y se copiara el contenido de src en la BeagleBone
+            **cpysrc : se ejecuta desde la PC en el directorio raiz 
+                       y se copiara el contenido de src en la BeagleBone
+             
+            **cpyrtl : Se ejecuta desde la PC en el directorio raiz
+                       y se copiara el contenido de rtl en la BeagleBone
+                       
+             **git   : Se ejecuta desde la PC en el directorio raiz y
+                       actualizara el contenido del git (necesita tener autoriado
+                       previamente user y password )
 
 
 
