@@ -1,0 +1,46 @@
+\newcommand{\dataname}{Data1.txt} 
+\newcommand{\datadate}{10/12/2013} 
+\newcommand{\datamean}{697.060606061} 
+\newcommand{\datavar}{109407.02663} 
+\newcommand{\datamax}{998.0} 
+\newcommand{\datamin}{178.0} 
+\newcommand{\datasum}{23003.0} 
+\newcommand{\dataavhour}{958.458333333} 
+\newcommand{\dataavhour}{358.458333333} 
+\newcommand{\dataavhour}{358.458333333} 
+
+
+
+\documentclass{article}
+\usepackage{graphicx}
+\begin{document}
+\title{AutoReport of \dataname}
+\author{Jorge Luis Mayorga}
+\date{\datadate}
+\date{\datadate}
+\maketitle
+\line(1,0){300} 
+
+\section{Resumen del Dia}
+Buenas noches a todos, en la presente se adjuntan los balances del dia \datadate           cuyos resultados estadisticos arrojan que :
+\begin{itemize}
+\item La media es de \datamean
+\item La varianza es de \datavar
+\item El dato maximo es de \datamax
+\item El dato minimo es de \datamin
+\item El acumulado en el dia es \datasum
+\item El promedio por hora es de \datahouraverage
+\end{itemize}
+
+\section{Grafica}
+
+\begin{figure}
+  \centering
+    \includegraphics[width=1\columnwidth]{Plot_data.png}
+  \caption{Grafica de Dia \datadate}
+  \label{fig:plot}
+\end{figure}
+
+
+
+\end{document}

@@ -80,6 +80,11 @@ git:
 	git add *;git commit -m "update";git push 
 #----------------------------------------------------------------#
 
+#---------------git:Genera el Reporte--------------------#
+#----------------------------------------------------------------#
+report:
+	cp ./src/latex_src/* ./src/python_src/tmp/;cd src;cd python_src;python dataAnalysis.py; python texmaker.py;cd tmp;pdflatex report.tex;xpdf report.pdf 
+#----------------------------------------------------------------#
 
 
 #-----------------Test:Compila test.c------------------------#
