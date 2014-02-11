@@ -1,0 +1,20 @@
+
+int sensorPin= 0;
+int sensorValue=0;
+int ledSafety= 0;
+void setup() {
+  Serial.begin(9600);  
+  pinMode(ledSafety, OUTPUT);    
+}
+
+
+
+void loop() {
+sensorValue = analogRead(sensorPin); 
+Serial.print(sensorValue);
+Serial.print("\n");
+digitalWrite(ledSafety, LOW);
+delay(75);
+digitalWrite(ledSafety, HIGH);
+delay(75);
+}
