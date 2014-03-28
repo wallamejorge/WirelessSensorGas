@@ -18,6 +18,7 @@ y envia son diferentes e incoherentes.
 //----------------------------------------------------------------------------------------//
 #include <avr/io.h>
 #include <util/delay.h>
+#include <inttypes.h>
 //----------------------------------------------------------------------------------------//
 //---------End:Librerias------------------------------------------------------------------//
 //----------------------------------------------------------------------------------------//
@@ -26,8 +27,8 @@ y envia son diferentes e incoherentes.
 //----------------------------------------------------------------------------------------//
 //---------Begin:Constantes---------------------------------------------------------------//
 //----------------------------------------------------------------------------------------//
-#define FOSC 1843200// Frecuency Clock Speed FOSC
-#define BAUD 9600  //Bits Rate
+#define FOSC 100000000// Frecuency Clock Speed FOSC
+#define BAUD 19200  //Bits Rate
 #define MYUBRR FOSC/16/BAUD-1 // Ecuacion sacada del datasheet del Micro
 //----------------------------------------------------------------------------------------//
 //---------End:Constantes-----------------------------------------------------------------//
@@ -42,6 +43,8 @@ void init_ports(void); //Inicializa los puertos
 void select_ADC_port(int i);// Seleccion cual puerto de ADC leer
 void USART_Init( unsigned int ubrr); // Inicializa serial
 void USART_Transmit( unsigned char data ); //Envia letra por serial
+void segment7Display(int valor);
+void sendDataSerial(int data[]);
 unsigned char USART_Receive( void ); //Lee letra por serial
 
 //----------------------------------------------------------------------------------------//
@@ -62,13 +65,15 @@ void main( void )
 	int gasValue=0; // Inicializo gasValue=0;
 	int t=0; // Inicializa t=0;
 	int data[24]; // Inicializa el vector de datos con 24 posiciones (24 horas )
-	
-    while(Stop==0 && t<23){
+	init_ports();
+	USART_Init ( MYUBRR );
+    while(Stop==0 && t<150){
 		
 		    //-------------------------------------//
 			//Contando el tiempo                   //
 		    //-------------------------------------//
 			t=t+1;
+
 			//-------------------------------------//
 			
 			//-------------------------------------//
@@ -84,16 +89,12 @@ void main( void )
 			data[i]=gasValue;
 			//-------------------------------------//
 			
-			 char letraInicial=' ';
-			 char letraLeida=' ';
-			 double del=800.0;
-			 USART_Init ( MYUBRR );
-			 USART_Transmit(letraInicial);
-			 _delay_ms(del);
-			 
-			 letraLeida=USART_Receive();
-			 USART_Transmit(letraLeida);
+
+			 _delay_ms(1000);
+
 	}
+sendDataSerial(data);
+
 	
 }
 
@@ -125,7 +126,7 @@ void USART_Init( unsigned int ubrr)
 	/* Enable receiver and transmitter */
 	UCSRB = (1<<RXEN)|(1<<TXEN);
 	/* Set frame format: 8data, 1stop bit */
-	UCSRC = (1<<URSEL)|(1<<USBS)|(3<<UCSZ0);
+	UCSRC = (1<<URSEL)|(0<<USBS)|(3<<UCSZ0);
 }
 
 
@@ -156,7 +157,7 @@ void init_ports(void){
 	MCUCSR|=(1<<JTD);
 	DDRA=0x00;	//Defino Puerto A como Inputs
 	PORTA=0x00;     //Habilito los puertos de A
-	DDRB = 0x1f;    //Defino Puerto B como Inputs
+	DDRB = 0x00;    //Defino Puerto B como Inputs
 	PORTB=0x00;     //Habilito los puertos de B
 
 	DDRC=0xff;		//Defino Puerto C como Outputs
@@ -174,10 +175,43 @@ void select_ADC_port(int i){
 	ADCSRA |= _BV(ADSC); //Comienza conversion
 	while (ADCSRA & _BV(ADSC) ) {}  // Esperar la conversion
 
+	}
+
+//7segmentDisplay utiliza el puerto p, e imprime el valor de 0-99
+void segment7Display(int valor)
+{
+	PORTC=0x05;
+
+}
+
+//Enviar datos de un vector por serial
+void sendDataSerial(int data[])
+{
+int l=strlen(data);
+int i=0;
+int sendData=0;
+char c;
+while(i<l)
+{
+if(data[i]<100 && data[i]>0){sendData=0;}
+if(data[i]<200 && data[i]>100){sendData=1;}
+if(data[i]<300 && data[i]>200){sendData=2;}
+if(data[i]<400 && data[i]>300){sendData=3;}
+if(data[i]<500 && data[i]>400){sendData=4;}
+if(data[i]<600 && data[i]>500){sendData=5;}
+if(data[i]<700 && data[i]>600){sendData=6;}
+if(data[i]<800 && data[i]>700){sendData=7;}
+if(data[i]<900 && data[i]>800){sendData=8;}
+if(data[i]<1000 && data[i]>900){sendData=9;}
+		
+c = char(sendData[i]+'0');
+USART_Transmit(c);
+i=i+1;
+}
+
 }
 
 
-
 //----------------------------------------------------------------------------------------//
-//---------End:Funciones----------------------------------------------------------------//
-//----------------------------------------------------------------------------------------//
+//---------End:Funciones-----------------------------------------------------------------//
+//---------------------------------------------------------------------------------------//
